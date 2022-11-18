@@ -1,13 +1,14 @@
 ---
-title: "Your A4 Report Title (TODO: Revise title)"
-author: "Your Name"
+title: "Incarceration Rates of Blacks vs. Whites"
+author: "Asad Jaffery"
 date: '2022-11-01'
 output: html_document
 ---
 
 ```{r echo=FALSE, eval=TRUE, message=FALSE}
-source("../source/a4-helpers.R")
-source("../source/analysis.R")
+source("~/info201/assignments/a4-AsadJafferyy/source/a4-helpers.R")
+source("~/info201/assignments/a4-AsadJafferyy/source/analysis.R")
+
 ```
 
 ## Abstract 
@@ -39,7 +40,7 @@ print(sum)
 [TODO]
 
 ## Data Summary 
-[TODO]
+This data examines `r num_counties` counties in the United States, and includes information that ranges from the year it was collected, and demographic of the population incarcerated, as well the total population. From this data, I was able to examine the county with the most black incarcerated individuals. This county happened to be the `r most_people_in_jail$county_name` in `r most_people_in_jail$year`. Then, I examined the `r most_people_in_jail$county_name` in order to find the ratio of black incarcerations to white incarcerations in 2018. This ratio ended up being `r la_black_white_ratio`. This number speaks for itself, and proves that there is some kind of systemic issue with the amount of black people being incarcerated. Lastly, I examined the average amount of white people who were incarcerated in every county and year that data was retrieved. This number is `r average_white_jail_pop`. The average amount of black people incarcerated in every county and year is `r average_black_jail_pop`. 
 
 [TODO ... other sections ... See Canvas for details]
 
