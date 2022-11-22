@@ -1,4 +1,5 @@
 library(tidyverse)
+library(ggplot2)
 
 # The functions might be useful for A4
 source("~/info201/assignments/a4-AsadJafferyy/source/a4-helpers.R")
@@ -64,34 +65,115 @@ average_white_jail_pop
 #----------------------------------------------------------------------------#
 
 ## Section 3  ---- 
-#----------------------------------------------------------------------------#
-# Growth of the U.S. Prison Population
-# Your functions might go here ... <todo:  update comment>
-#----------------------------------------------------------------------------#
-# This function ... <todo:  update comment>
+
+# This function creates a data frame that contains the total jail 
+# population for every year that data set contains
+
 get_year_jail_pop <- function() {
-  # TODO: Implement this function 
-return()   
+  
+  year_jail_pop <- incarceration_trends %>%
+    group_by(year) %>%
+    summarize(total_year_jail_pop = sum(total_jail_pop, na.rm = TRUE))
+  
+
+return(year_jail_pop)   
 }
 
-# This function ... <todo:  update comment>
+View(get_year_jail_pop())
+
+
+
+# This function creates a bar chart that represents the total U.S population in 
+# jail from 1970 - 2018
 plot_jail_pop_for_us <- function()  {
-  # TODO: Implement this function 
-  return()   
+  
+  plot <- ggplot(get_year_jail_pop(), aes(x=year, y = total_year_jail_pop)) +
+    geom_bar(stat = "identity", alpha = 100) +
+    theme_bw()+
+    labs(title = "Increase of Jail Population in U.S (1970 - 2018)",
+         x = "Year",
+         y = "Total Jail Population",
+         caption = "Figure 1: The U.S Prision Population over the years.") +
+    ylim(0, 800000)
+  
+  return(plot)   
 } 
 
-## Section 4  ---- 
-#----------------------------------------------------------------------------#
-# Growth of Prison Population by State 
-# Your functions might go here ... <todo:  update comment>
-# See Canvas
+plot_jail_pop_for_us()
+
 #----------------------------------------------------------------------------#
 
-## Section 5  ---- 
+## Section 4
+
+
+#This function takes in a vector of states and creates a data set that contains
+# the population in jail for every year of each state that was specified in the argument 
+get_jail_pop_by_states <- function(states) {
+  
+  jail_pop_by_state <- incarceration_trends %>%
+    group_by(state, year) %>%
+    filter(state %in% (states)) %>%
+    summarize(total_state_year_jail_pop = sum(total_jail_pop, na.rm = TRUE))
+  
+  return(jail_pop_by_state)
+  
+}
+
+
+# This function takes in a vector of states, and creates a line chart that 
+# tracks the population in jail of each  state from 1970 - 2018
+
+plot_jail_pop_by_states <- function(states){
+
+plot <- ggplot(get_jail_pop_by_states(states), aes(x = year, y = total_state_year_jail_pop, color = state)) +
+                 geom_line() +
+                 labs(title = "Increase of Jail Population in States (1970 - 2018)",
+                      x = "Year",
+                      y = "Jail Population",
+                      caption = "Figure 2: The jail population for states in the U.S.")
+return(plot)
+}
+
+
 #----------------------------------------------------------------------------#
-# <variable comparison that reveals potential patterns of inequality>
-# Your functions might go here ... <todo:  update comment>
-# See Canvas
+
+## Section 5  
+
+
+# This function takes in a state as an argument, and creates a data set that has 
+# the white and black prison population for that state over the years 1970-2018
+get_black_vs_white_jail_pop <- function(states) {
+  
+ black_vs_white <- incarceration_trends %>%
+    group_by(state, year) %>%
+    filter(state == states) %>%
+    summarize(total_jail_black_pop = sum(black_jail_pop, na.rm = TRUE), total_jail_white_pop = sum(white_jail_pop, na.rm = TRUE))
+  
+  return(black_vs_white)
+  
+}
+
+# This function takes in a state creates a line chart that shows the change in 
+# black prison population vs white prison population over the years 1970-2018
+
+plot_black_vs_white_jail_pop <- function(states){
+  
+  plot <- ggplot(get_black_vs_white_jail_pop(states), aes(x = year,)) +
+    geom_line(aes(y = total_jail_white_pop,  color = "hp")) +
+    geom_line(aes(y = total_jail_black_pop)) +
+    labs(title = "Black vs White population in Jail",
+         x = "Year",
+         y = "Jail Population",
+         caption = "Figure 3: The jail population for black vs. white people.")
+  return(plot)
+  
+  
+}
+
+
+  
+
+
 #----------------------------------------------------------------------------#
 
 ## Section 6  ---- 

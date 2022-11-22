@@ -14,35 +14,40 @@ source("~/info201/assignments/a4-AsadJafferyy/source/analysis.R")
 ## Abstract 
 [TODO: Include a short abstract (about 50 words)]
 
-# Test (TODO: Remove before submission!!)
-```{r echo=FALSE}
-q1_string <- test_query1()
-num <- 5
-```
-As you know, this is a markdown report. The [R Markdown Cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf) is **useful!**
-
-* Here's a test of a dynamic variable. Say **"`r q1_string`!!!** 
-* Here's another test. A vector
-* Another bullet point
-* Another *special* bullet point
-of numbers: `r test_query2(num)`.
-
-Recall that _{r echo=TRUE}_ can be used to display the code, 
-which is very useful when developing and debugging a report. Here's an example: 
-
-```{r echo=TRUE}
-num <- 5
-sum <- sum(test_query2(num))
-print(sum)
-```
-
 ## Introduction 
-[TODO]
+This data set examines incarceration throughout the U.S. The people who directly interact with this data set are those who have been in prison over the years. Their race and gender is collected and examined. Those who are not directly effected by this data set are those who are living in the U.S but not incarcerated, as they are still part of the data set, but are not examined to the extent to which those that are incarcerated (used for population purposes). The goal of examining this data set is to understand the disproportions of race throughout the prison system. The end goal is to understand these inequities, hopefully dismantle any sort of them. Some of the ideas that I wish to understand are: [insert questions]
+
+
 
 ## Data Summary 
 This data examines `r num_counties` counties in the United States, and includes information that ranges from the year it was collected, and demographic of the population incarcerated, as well the total population. From this data, I was able to examine the county with the most black incarcerated individuals. This county happened to be the `r most_people_in_jail$county_name` in `r most_people_in_jail$year`. Then, I examined the `r most_people_in_jail$county_name` in order to find the ratio of black incarcerations to white incarcerations in 2018. This ratio ended up being `r la_black_white_ratio`. This number speaks for itself, and proves that there is some kind of systemic issue with the amount of black people being incarcerated. Lastly, I examined the average amount of white people who were incarcerated in every county and year that data was retrieved. This number is `r average_white_jail_pop`. The average amount of black people incarcerated in every county and year is `r average_black_jail_pop`. 
 
-[TODO ... other sections ... See Canvas for details]
 
-_All the very best with your work!_
 
+## Growth of the U.S Prision Population 
+```{r echo=TRUE}
+plot_jail_pop_for_us()
+
+```
+\n 
+
+Figure 1 shows the total prison population in the U.S by year. There was a gradual increase in the prison population from 1970, until it peaked in 2008. From there, the prison population stayed very high and has been slightly fluctuating, which has lead to a partial plateau. 
+Still need to do: [ ] Complete: A concise, clear question (in summary paragraph)
+
+
+## Growth of Prision Population by State
+```{r echo=TRUE}
+plot_jail_pop_by_states(c("WA", "CA", "OR", "NV", "NY"))
+
+```
+\n 
+
+Figure 2 shows the jail population of Washington, California, Oregon, Nevada, and New York. Holistically, the amount of people in jail has increased over the years. Although there are some fluctuations, the general trend is the same for each state that is examined. The reason that I chose these states is because I wanted to create a chart that took data from states with both, relatively large and small populations.
+
+
+## Black Population in Prision vs. White Population in Prision
+
+```{r echo=TRUE}
+plot_black_vs_white_jail_pop("WA")
+plot_black_vs_white_jail_pop("IL")
+```
