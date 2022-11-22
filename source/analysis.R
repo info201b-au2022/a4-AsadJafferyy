@@ -37,7 +37,7 @@ num_counties <- length(unique(incarceration_trends$county_name))
 most_people_in_jail <- incarceration_trends %>% 
   filter(total_jail_pop == max(total_jail_pop, na.rm = TRUE))
 
-# The ratio of black people in jail to white people in jail 
+# The ratio of black people in jail to white people in jail in the LA county
 la_black_white_ratio <- incarceration_trends %>% 
   filter(year == max(year)) %>%
   filter(state == "CA") %>%
@@ -164,7 +164,7 @@ plot_black_vs_white_jail_pop <- function(states){
     labs(title = "Black vs White population in Jail",
          x = "Year",
          y = "Jail Population",
-         caption = "Figure 3: The jail population for black vs. white people.")
+         caption = "The jail population for black vs. white people.")
   return(plot)
   
   
@@ -177,12 +177,27 @@ plot_black_vs_white_jail_pop <- function(states){
 #----------------------------------------------------------------------------#
 
 ## Section 6  ---- 
-#----------------------------------------------------------------------------#
-# <a map shows potential patterns of inequality that vary geographically>
-# Your functions might go here ... <todo:  update comment>
-# See Canvas
-#----------------------------------------------------------------------------#
 
-## Load data frame ---- 
+location_data <- map_data("state")
+View(location_data)
+
+
+black_white_ratio <- incarceration_trends %>% 
+  filter(year == max(year)) %>%
+  mutate(ratio = black_jail_pop / white_jail_pop)
+
+
+View(black_white_ratio)
+
+
+df1 <- merge(location_data, black_white_ratio, by = "region")
+
+
+plot1 <- ggplot(df1, aes(long, lat)) +
+  geom_polygon(aes( fill = ratio)) +
+  coord_map()
+
+
+plot1
 
 

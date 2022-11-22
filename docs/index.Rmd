@@ -13,9 +13,11 @@ source("~/info201/assignments/a4-AsadJafferyy/source/analysis.R")
 
 ## Abstract 
 [TODO: Include a short abstract (about 50 words)]
+After examining the incarceration of Americans throughout the country, it becomes clear that there is a disproportionate amount of black people that are being arrested. Although this issue is not to same extent throughout the entire country, the states that are contributing to this issue deserved to be examined. The goal of this report is to understand where the inequalities are happening the most in order to take action against them. 
+
 
 ## Introduction 
-This data set examines incarceration throughout the U.S. The people who directly interact with this data set are those who have been in prison over the years. Their race and gender is collected and examined. Those who are not directly effected by this data set are those who are living in the U.S but not incarcerated, as they are still part of the data set, but are not examined to the extent to which those that are incarcerated (used for population purposes). The goal of examining this data set is to understand the disproportions of race throughout the prison system. The end goal is to understand these inequities, hopefully dismantle any sort of them. Some of the ideas that I wish to understand are: [insert questions]
+This data set examines incarceration throughout the U.S. The people who directly interact with this data set are those who have been in prison over the years. Their race and gender is collected and examined. Those who are not directly effected by this data set are those who are living in the U.S but not incarcerated, as they are still part of the data set, but are not examined to the extent to which those that are incarcerated (used for population purposes). The goal of examining this data set is to understand the disproportions of race throughout the prison system. The end goal is to understand these inequities, hopefully dismantle any sort of them. Some of the ideas that I wish to understand are: How is the amount of black people incarcerated compare to the amount of white people incarcerated on the state level? 
 
 
 
@@ -25,7 +27,7 @@ This data examines `r num_counties` counties in the United States, and includes 
 
 
 ## Growth of the U.S Prision Population 
-```{r echo=TRUE}
+```{r echo=TRUE, eval=TRUE, message=FALSE}
 plot_jail_pop_for_us()
 
 ```
@@ -36,7 +38,7 @@ Still need to do: [ ] Complete: A concise, clear question (in summary paragraph)
 
 
 ## Growth of Prision Population by State
-```{r echo=TRUE}
+```{r echo=TRUE, eval=TRUE, message=FALSE}
 plot_jail_pop_by_states(c("WA", "CA", "OR", "NV", "NY"))
 
 ```
@@ -47,7 +49,13 @@ Figure 2 shows the jail population of Washington, California, Oregon, Nevada, an
 
 ## Black Population in Prision vs. White Population in Prision
 
-```{r echo=TRUE}
+```{r echo=TRUE, eval=TRUE, message=FALSE}
 plot_black_vs_white_jail_pop("WA")
 plot_black_vs_white_jail_pop("IL")
 ```
+\n 
+
+Figure 3 shows two graphs. Both of these graphs are line graphs that compare the amount of black incarcerations (black line), to the amount of white incarcerations (red line) from 1970 - 2018. The first graph shows the comparison of these incarcerations of Washington state, whereas the second one shows the comparison in Illinois. I noticed that the amount of incarcerations of white people was higher in Washington, where the opposite was true in Illinois. The disparity in Illinois is not due to the black population being higher than the white population, as that is not true. Thus, the issue is likely rooted in a form of systemic racism, as there is a disproportionate amount of black people being arrested. 
+
+## Section 6
+
