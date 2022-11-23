@@ -1,5 +1,7 @@
 library(tidyverse)
 library(ggplot2)
+install.packages("sf")
+library(sf)
 
 # The functions might be useful for A4
 source("~/info201/assignments/a4-AsadJafferyy/source/a4-helpers.R")
@@ -178,26 +180,58 @@ plot_black_vs_white_jail_pop <- function(states){
 
 ## Section 6  ---- 
 
+get_black_to_white_ratio <- function(){
+
+# create simplified data frame with just black and white prison population for each state
+df <- incarceration_trends %>%
+  group_by(state) %>%
+  summarise(state_black_jail_pop = sum(black_jail_pop, na.rm = TRUE), state_white_jail_pop = sum(white_jail_pop, na.rm = TRUE))
+
+
+
+#Create data frame that contains ratio of black people to white people in jail for each state
+black_to_white_ratio <- mutate(df, ratio = state_black_jail_pop / state_white_jail_pop)
+
+#Replace NA values with 0
+black_to_white_ratio[is.na(black_to_white_ratio)] = 0
+
+
+# add a column with the full name of each state
+df2 <- black_to_white_ratio %>%
+  mutate(region = tolower(state.name[match(black_to_white_ratio$state, state.abb)]))
+  
+# delete data from Washington DC
+df3 <- df2[-8,]
+
+# get longitude and latitude data 
 location_data <- map_data("state")
-View(location_data)
+
+#combine location data with the ratio data
+final_data <- left_join(df3, location_data, by = "region")
+
+#remove Alaska data
+final_data1 <- final_data[-1,]
 
 
-black_white_ratio <- incarceration_trends %>% 
-  filter(year == max(year)) %>%
-  mutate(ratio = black_jail_pop / white_jail_pop)
+return(final_data1)
+}
 
 
-View(black_white_ratio)
+#Takes the data that in the previous function and creates a map chart out of it
+plot_black_to_white_ratio <- function(){
+
+plot1 <- ggplot(get_black_to_white_ratio()) +
+  geom_polygon(aes(x = long, y = lat, fill = ratio), color = "black") +
+  coord_map()+
+  labs(title = "Ratio of Black to White incarcerated in the U.S",
+       caption = "figure 3: The ratio of total black to white incarcerations throughout the U.S")
 
 
-df1 <- merge(location_data, black_white_ratio, by = "region")
+plot2 <- plot1 + scale_fill_gradient(name = "ratio", low = "white", high = "red")
 
+plot2
+   return(plot2)
 
-plot1 <- ggplot(df1, aes(long, lat)) +
-  geom_polygon(aes( fill = ratio)) +
-  coord_map()
-
-
-plot1
-
+}
+plot_black_to_white_ratio()
 
